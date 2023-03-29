@@ -11,10 +11,10 @@ const props = defineProps({
     default: () => 'depan'
   },
   width: {
-    default: () => 465
+    default: () => 360
   },
   height: {
-    default: () => 600
+    default: () => 442
   },
   isShow: {
     default: () => false,

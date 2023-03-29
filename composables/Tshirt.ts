@@ -3,8 +3,8 @@ import { FabricObject } from 'fabric/dist/src/shapes/Object/FabricObject'
 
 export function useTshirt (id: string) {
   return new Tshirt(id, {
-    width: 600,
-    height: 600,
+    width: 360,
+    height: 442,
   }) 
 }
 
