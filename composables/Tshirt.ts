@@ -60,9 +60,6 @@ export class Tshirt extends Canvas {
       ..._options
     }
 
-    console.log('options', _options)
-
-
     if(obj && obj instanceof Textbox) {
       obj.set( {...options, text: _text} )
     }

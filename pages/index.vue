@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import Tshirt from '../components/Tshirt.vue'
-import { useTshirtStore } from '~~/store/tshirtStore';
+import { useTshirtStore } from '~~/store/tshirt';
 
 const depan = shallowRef<InstanceType<typeof Tshirt> | null>(null)
 const belakang = shallowRef<InstanceType<typeof Tshirt> | null>(null)
@@ -37,13 +37,13 @@ const flip = (_page: String) => {
   
 }
 
-watch(tshirt, (value) => {
-  store.$patch({
-    page: page.value,
-    tshirt: tshirt
-  })
+// watch(tshirt, (value) => {
+//   store.$patch({
+//     page: page.value,
+//     tshirt: tshirt
+//   })
 
-})
+// })
 
 defineExpose({
   tshirt
@@ -58,7 +58,7 @@ defineExpose({
     </div>
     
     <tshirt ref="depan" page="depan" :is-show="page === 'depan'" />
-    <tshirt ref="belakang" page="belakang" :is-show="page === 'belakang'" />
+    <!-- <tshirt ref="belakang" page="belakang" :is-show="page === 'belakang'" /> -->
   
     <div class="page-nav d-flex flex-column bd-highlight ">
       <a href="#" @click.prevent="flip('depan')" class="btn" >
