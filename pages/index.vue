@@ -1,9 +1,11 @@
 <script lang="ts" setup>
 import Tshirt from '../components/Tshirt.vue'
+import { useTshirtStore } from '~~/store/tshirtStore';
 
 const depan = shallowRef<InstanceType<typeof Tshirt> | null>(null)
 const belakang = shallowRef<InstanceType<typeof Tshirt> | null>(null)
-const page = ref('depan')
+const page = ref<String>('depan')
+const store = useTshirtStore()
 
 const tshirt = computed<InstanceType<typeof Tshirt> | null>(() => {
   if(page.value === 'depan') {
@@ -17,29 +19,40 @@ const tshirt = computed<InstanceType<typeof Tshirt> | null>(() => {
   }
 })
 
-const addText = (event: any) => {
-  tshirt.value?.addText(event)
+const addText = (event: any, options: Object) => {
+  tshirt.value?.addText(event, options)
 }
 
 const flip = (_page: String) => {
+  tshirt.value?.tshirt.discardActiveObject()
+  tshirt.value?.tshirt?.renderAll()
+  
+  store.$patch({
+    text: '',
+    page: page.value,
+    tshirt: tshirt
+  })
+
   page.value = _page
+  
 }
 
-onMounted(()=>{
-  // setTimeout(() => {
-  //   addText('DEPAN')
-  //   page.value = 'belakang'
-  //   addText('BELAKANG')
-  //   setTimeout(() => {
-  //     page.value = 'depan'
-  //   }, 3000);
-  // }, 3000);
+watch(tshirt, (value) => {
+  store.$patch({
+    page: page.value,
+    tshirt: tshirt
+  })
+
+})
+
+defineExpose({
+  tshirt
 })
 
 </script>
 
 <template>
-  <div class="wrapper text-center">
+  <div class="container">
     <div class="mb-4">
       <h1>Homepage</h1>
     </div>
@@ -47,9 +60,6 @@ onMounted(()=>{
     <tshirt ref="depan" page="depan" :is-show="page === 'depan'" />
     <tshirt ref="belakang" page="belakang" :is-show="page === 'belakang'" />
   
-    <div class="text-center mb-4">
-      <input :value="tshirt?.vtext" @keyup.enter="addText($event)" class="border"/>
-    </div>
     <div class="page-nav d-flex flex-column bd-highlight ">
       <a href="#" @click.prevent="flip('depan')" class="btn" >
         DEPAN
@@ -61,6 +71,5 @@ onMounted(()=>{
         <!-- <img :src="designer.product.mockup+'belakang.png'" alt="Belakang"> -->
       </a>
     </div>
-
   </div>
 </template>

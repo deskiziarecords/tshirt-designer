@@ -4,6 +4,8 @@ import { Tshirt, useTshirt } from "../composables/Tshirt"
 import {Canvas, Rect, Textbox} from 'fabric'
 import debounce from 'lodash/debounce'
 import { ObjectEvents } from "fabric/dist/src/EventTypeDefs"
+import { FabricObject } from "fabric/dist/src/shapes/Object/FabricObject";
+import { useTshirtStore } from "~~/store/tshirtStore";
 
 const props = defineProps({
   page: {
@@ -24,7 +26,7 @@ const props = defineProps({
 
 const vtext = ref<string|null>(null)
 const tshirt = shallowRef<Tshirt|null>(null)
-
+const store = useTshirtStore()
 
 onMounted(()=> {
   if( (tshirt.value instanceof Tshirt) ) {
@@ -42,7 +44,9 @@ onMounted(()=> {
   tshirt.value.on('selection:created', function(event: ObjectEvents){
     // console.log('selection:created', event)
     const obj = event.selected[0]
+    console.log('type', obj.type)
     vtext.value = obj instanceof Textbox ? obj.text : ''
+    store.type = obj.type
   })
 
   tshirt.value.on('selection:updated', (event: ObjectEvents) => {
@@ -55,19 +59,23 @@ onMounted(()=> {
     const obj = event.deselected[0]
     vtext.value = ''
   })
+
 })
 
-onBeforeUnmount(() => {
-  tshirt.value = null
-})
-
-const addText = debounce(function(event: any){
-  tshirt.value?.text(event.target.value)
+const addText = debounce(function(value: any, options){
+  const object: InstanceType<typeof FabricObject> = tshirt.value?.getActiveObject()
+  if(value === '') {
+    tshirt.value?.remove(object)
+    return
+  }
+  tshirt.value?.addText(value, options)
 }, 700)
+
+watch(vtext, (value) => store.text = value)
 
 defineExpose({
   tshirt,
-  vtext,
+  text: vtext,
   addText
 })
 </script>

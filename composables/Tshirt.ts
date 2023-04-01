@@ -1,5 +1,7 @@
 import {Canvas, loadSVGFromURL, Textbox, Image, util} from 'fabric'
+import fabric from 'fabric'
 import { FabricObject } from 'fabric/dist/src/shapes/Object/FabricObject'
+import { Console } from 'console'
 
 export function useTshirt (id: string) {
   return new Tshirt(id, {
@@ -8,12 +10,21 @@ export function useTshirt (id: string) {
   }) 
 }
 
+interface ItextOptions {
+  globalCompositeOperation?: String,
+  fontFamily?: String,
+  fontSize?: Number,
+  fontWeight?: String,
+  fontStyle?: String,
+  underline?: Boolean,
+}
+
 export class Tshirt extends Canvas {
   vtext: Ref<string|null> = ref(null)
-  
+
   constructor(id: string, option: Object) {
     super(id, option)
-
+    
     this.mockup( `/img/mockup/kaos-o-neck-l-pendek/${id}` )
   }
 
@@ -39,19 +50,24 @@ export class Tshirt extends Canvas {
     }, null, null);
   }
 
-  text(_text: string) {
+  addText(_text: string, _options: ItextOptions) {
+
     let obj: FabricObject = this.getActiveObject()
+    const options = {
+      fontSize: 20,
+      globalCompositeOperation: 'source-atop',
+      fontFamily: 'Arial',
+      ..._options
+    }
+
+    console.log('options', _options)
+
 
     if(obj && obj instanceof Textbox) {
-      obj.set({
-        text: _text
-      })
+      obj.set( {...options, text: _text} )
     }
     else{
-      obj = new Textbox(_text, {
-        fontSize: 20,
-        globalCompositeOperation: 'source-atop'
-      })
+      obj = new Textbox(_text, options)
       this.centerObject(obj)
       this.add( obj )
       this.setActiveObject(obj)
