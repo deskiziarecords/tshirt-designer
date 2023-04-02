@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Text from '../components/tools/Text.vue'
-provide('foo', 'FOO')
+import Flip from '../components/tools/Flip.vue'
 
 </script>
 <template>
@@ -52,7 +52,11 @@ provide('foo', 'FOO')
       <div class="text-center">
         <!-- <label for="my-drawer" class="btn btn-primary drawer-button">Open drawer</label> -->
         <slot></slot>
+
       </div>
+
+      <flip></flip>
+
     </div> 
     <div class="drawer-side border-r">
       <!-- <label for="my-drawer" class="drawer-overlay"></label> -->

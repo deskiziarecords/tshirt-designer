@@ -60,7 +60,13 @@ export class Tshirt extends Canvas {
       ..._options
     }
 
+    
     if(obj && obj instanceof Textbox) {
+
+      if(_text === '') {
+        this.remove(obj)
+        return
+      }
       obj.set( {...options, text: _text} )
     }
     else{

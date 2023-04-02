@@ -1,12 +1,7 @@
 <script lang="ts" setup>
 
-import { Tshirt, useTshirt } from "../composables/Tshirt"
-import {Canvas, Rect, Textbox} from 'fabric'
-import debounce from 'lodash/debounce'
-import { ObjectEvents } from "fabric/dist/src/EventTypeDefs"
-import { FabricObject } from "fabric/dist/src/shapes/Object/FabricObject";
-import { useTshirtStore } from "~~/store/tshirt";
 import { useTextStore } from "~~/store/text";
+import { useTshirtStore } from "~~/store/tshirt";
 
 const props = defineProps({
   page: {
@@ -25,67 +20,10 @@ const props = defineProps({
   }
 })
 
-const vtext = ref<string|null>(null)
-const tshirt = shallowRef<Tshirt|null>(null)
 const store = useTshirtStore()
-const text = useTextStore()
 
 store.init(props.page)
 
-setTimeout(() => {
-  text.add('DEPAN')
-  setTimeout(() => {
-    text.object.set({text: 'GANTI COY'})
-    store.canvas?.renderAll()
-  }, 2000);
-}, 2000);
-
-onMounted(()=> {
-  // tshirt.value = useTshirt(props.page)
-  
-  // test
-  // tshirt.value.add(
-  //   new Rect({width: 100, height: 100, globalCompositeOperation: 'source-atop'})
-  // )
-  // tshirt.value.renderAll()
-
-  // tshirt.value.on('selection:created', function(event: ObjectEvents){
-  //   // console.log('selection:created', event)
-  //   const obj = event.selected[0]
-  //   console.log('type', obj.type)
-  //   vtext.value = obj instanceof Textbox ? obj.text : ''
-  //   store.type = obj.type
-  // })
-
-  // tshirt.value.on('selection:updated', (event: ObjectEvents) => {
-  //   // console.log('selection:updated')
-  //   const obj = event.selected[0]
-  //   vtext.value = obj instanceof Textbox ? obj.text : ''
-  // })
-
-  // tshirt.value.on('selection:cleared', (event: ObjectEvents) => {
-  //   const obj = event.deselected[0]
-  //   vtext.value = ''
-  // })
-
-})
-
-const addText = debounce(function(value: any, options){
-  const object: InstanceType<typeof FabricObject> = tshirt.value?.getActiveObject()
-  if(value === '') {
-    tshirt.value?.remove(object)
-    return
-  }
-  tshirt.value?.addText(value, options)
-}, 700)
-
-watch(vtext, (value) => store.text = value)
-
-defineExpose({
-  tshirt,
-  text: vtext,
-  addText
-})
 </script>
 
 <template>

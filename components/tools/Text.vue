@@ -1,52 +1,33 @@
 <script setup lang="ts">
-import { useTextStore } from '@/store/text';
-import { useTshirtStore } from '~~/store/tshirtStore';
-import { ObjectEvents } from "fabric/dist/src/EventTypeDefs"
-import { Textbox } from 'fabric'
+import { useTextStore } from '~~/store/text'
 import debounce from 'lodash/debounce'
 
-const store = useTshirtStore()
-const textStore = useTextStore()
-
-console.log('TEST', textStore.$state)
-
-const addText = debounce((event: any) => {
-  const value = event.target.value
-  store.text = value
-  store.tshirt?.addText(value, textStore.$state)
-  store.tshirt.text = value
-}, 1000)
-
-onMounted(() => {
-  store.tshirt?.tshirt?.on('selection:updated', (event: ObjectEvents) => {
-    console.log('selection:updated')
-    const obj = event.selected[0]
-    store.text = obj instanceof Textbox ? obj.text : ''
-  })
-})
+const text = useTextStore()
 
 const isBold = computed(() => {
-  return textStore.fontWeight === 'bold'
+  return text.options.fontWeight === 'bold'
 })
 const isItalic = computed(() => {
-  return textStore.fontStyle === 'italic'
+  return text.options.fontStyle === 'italic'
 })
 const isUnderline = computed(() => {
-  return textStore.underline === true
+  return text.options.underline === true
 })
+
+const addText = debounce(function(event: any) {
+  text.add(event.target.value)
+}, 1000)
 
 const setFont = (key: String) => {
   if(key === 'bold') {
-    textStore.fontWeight = textStore.fontWeight !== 'bold' ? 'bold': 'normal'
+    text.options.fontWeight = text.options.fontWeight !== 'bold' ? 'bold': 'normal'
   }
   else if(key === 'italic') {
-    textStore.fontStyle = textStore.fontStyle !== 'italic' ? 'italic': 'normal'
+    text.options.fontStyle = text.options.fontStyle !== 'italic' ? 'italic': 'normal'
   }
   else if(key === 'underline') {
-    textStore.underline = !textStore.underline
+    text.options.underline = !text.options.underline
   }
-
-  store.tshirt?.addText(store.text, textStore.$state)
 }
 
 </script>
@@ -56,13 +37,13 @@ const setFont = (key: String) => {
     <label class="label">
       <span class="label-text">Input Text</span>
     </label>
-    <textarea :value="store.text" @input="addText($event)" class="textarea textarea-primary textarea-bordered h-24" placeholder="input text"></textarea>
+    <textarea :value="text.text" @input="addText($event)" class="textarea textarea-primary textarea-bordered h-24" placeholder="input text"></textarea>
   </div>
   <div class="form-control">
     <div class="btn-group">
-      <button class="btn btn-outline border-r-0" :class="{'btn-active': isBold}" @click="setFont('bold')">Bold</button>
-      <button class="btn btn-outline border-r-0" :class="{'btn-active': isItalic}" @click="setFont('italic')">Italic</button>
-      <button class="btn btn-outline" :class="{'btn-active': isUnderline}" @click="setFont('underline')">Underline</button>
+      <button class="btn btn-sm btn-outline border-r-0" :class="{'btn-active': isBold}" @click="setFont('bold')">Bold</button>
+      <button class="btn btn-sm btn-outline border-r-0" :class="{'btn-active': isItalic}" @click="setFont('italic')">Italic</button>
+      <button class="btn btn-sm btn-outline" :class="{'btn-active': isUnderline}" @click="setFont('underline')">Underline</button>
     </div>
   </div>
 </template>
