@@ -78,4 +78,17 @@ export class Tshirt extends Canvas {
     return obj
   }
   
+  addImage(src: string){
+    Image.fromURL(src).then((image: FabricObject) => {
+      image.scaleToWidth(200)
+      image.set({
+        globalCompositeOperation: 'source-atop',
+        left: 100,
+        top: 100,
+      })
+      this.add(image)
+      this.centerObjectH(image)
+      this.renderAll()
+    })
+  }
 }

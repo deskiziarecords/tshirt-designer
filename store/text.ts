@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 import { useTshirtStore } from './tshirt'
 import { ITextOptions } from '~~/types/ITshirt'
 
-interface OptionsRecord {[key: string] : string|Boolean}
+interface OptionsRecord {[key: string] : string|Boolean|any}
 
 export const useTextStore = defineStore('text-store', () => {
   const store = useTshirtStore()

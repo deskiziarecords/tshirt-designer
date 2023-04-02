@@ -1,10 +1,18 @@
-const uploadImage = (event)=>{
+import { File } from "buffer";
+
+const uploadImage = (event: Event)=>{
   return new Promise((resolve)=>{
-    var selectedFile = event.target.files[0];
+    const input = event.target as HTMLInputElement;
+
+    if (!input.files?.length) {
+      return;
+    }
+
+    var selectedFile = input.files[0];
     var reader = new FileReader();
   
-    reader.onload = function(event) {
-      const src = event.target.result;
+    reader.onload = (event: Event) => {
+      const src = reader.result;
       return resolve(src)
     };
     reader.readAsDataURL(selectedFile)

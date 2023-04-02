@@ -9,6 +9,7 @@ export const useTshirtStore = defineStore('tshirt-store', () => {
   }
 
   const page = ref<string>('depan')
+  const inputType = ref<string>('text')
   const text = reactive( useTextStore() )
 
   const canvases = shallowReactive<CanvasesRecord>({
@@ -62,12 +63,20 @@ export const useTshirtStore = defineStore('tshirt-store', () => {
 
   const _updateTextObject = (event: any) => {
     const obj = event.selected[0]
-    text.text = obj instanceof Textbox ? obj.text : ''
 
-    Object.keys(text.options).forEach(key => {
-      text.options[key] = obj[key]
-    })
-    text.object = obj
+    if( obj.isType('textbox')  ) {
+      text.text = obj.text
+      Object.keys(text.options).forEach(key => {
+        text.options[key] = obj[key]
+      })
+      text.object = obj
+      inputType.value = 'text'
+    }
+    else if( obj.isType('image')) {
+      text.text = ''
+      inputType.value = 'image'
+    }
+
   }
 
   watch(text.options, (value, old) => {
@@ -76,5 +85,5 @@ export const useTshirtStore = defineStore('tshirt-store', () => {
     }
   })
 
-  return {page, canvas, canvases, init, flip}
+  return {page, inputType, canvas, canvases, init, flip}
 })

@@ -1,6 +1,14 @@
 <script setup lang="ts">
 import Text from '../components/tools/Text.vue'
 import Flip from '../components/tools/Flip.vue'
+import Image from '../components/tools/Image.vue'
+import { useTshirtStore } from '~~/store/tshirt';
+
+const store = useTshirtStore()
+
+const setInputType = (type: string) => {
+  store.inputType = type
+}
 
 </script>
 <template>
@@ -63,13 +71,14 @@ import Flip from '../components/tools/Flip.vue'
 
       <div class="w-80 bg-base-100 text-base-content py-4">
         <div class="tabs">
-          <a class="tab tab-bordered tab-active">Text</a> 
-          <a class="tab tab-bordered">Image</a> 
+          <a @click="setInputType('text')" class="tab tab-bordered" :class="{'tab-active': store.inputType === 'text'}">Text</a> 
+          <a @click="setInputType('image')" class="tab tab-bordered" :class="{'tab-active': store.inputType === 'image'}">Image</a> 
         </div>
         <!-- Sidebar content here -->
 
         <div class="p-4">
-          <Text />
+          <Text v-if="store.inputType === 'text'" />
+          <Image v-if="store.inputType === 'image'" />
         </div>
         
       </div>
