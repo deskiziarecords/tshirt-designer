@@ -41,9 +41,9 @@ const setFont = (key: String) => {
   </div>
   <div class="form-control">
     <div class="btn-group">
-      <button class="btn btn-sm btn-outline border-r-0" :class="{'btn-active': isBold}" @click="setFont('bold')">Bold</button>
-      <button class="btn btn-sm btn-outline border-r-0" :class="{'btn-active': isItalic}" @click="setFont('italic')">Italic</button>
-      <button class="btn btn-sm btn-outline" :class="{'btn-active': isUnderline}" @click="setFont('underline')">Underline</button>
+      <button class="btn btn-sm btn-outline border-r-0 text-xl" :class="{'btn-active': isBold}" @click="setFont('bold')"><Icon name="ic:baseline-format-bold" /></button>
+      <button class="btn btn-sm btn-outline border-r-0 text-xl" :class="{'btn-active': isItalic}" @click="setFont('italic')"><icon name="ic:baseline-format-italic"/></button>
+      <button class="btn btn-sm btn-outline text-xl" :class="{'btn-active': isUnderline}" @click="setFont('underline')"><icon name="ic:baseline-format-underlined"/></button>
     </div>
   </div>
 </template>

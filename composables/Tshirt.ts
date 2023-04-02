@@ -1,7 +1,5 @@
 import {Canvas, loadSVGFromURL, Textbox, Image, util} from 'fabric'
-import fabric from 'fabric'
 import { FabricObject } from 'fabric/dist/src/shapes/Object/FabricObject'
-import { Console } from 'console'
 
 export function useTshirt (id: string) {
   return new Tshirt(id, {
