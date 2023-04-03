@@ -1,13 +1,8 @@
 <script lang="ts" setup>
 import Tshirt from '../components/Tshirt.vue'
-import { useTshirtStore } from '~~/stores/tshirt';
-import { useTextStore } from '~~/stores/text';
-import { Textbox } from "fabric";
+import { useTshirtStore } from '~~/stores/tshirt'
 
 const store = useTshirtStore()
-
-
-  
 
 </script>
 

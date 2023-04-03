@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { Tshirt } from '~~/composables/Tshirt'
 import { useTextStore } from './text'
+import { useProductStore } from './product'
+import { FabricObject } from 'fabric/dist/src/shapes/Object/FabricObject'
 
 export const useTshirtStore = defineStore('tshirt-store', () => {
   interface CanvasesRecord {
@@ -10,6 +12,7 @@ export const useTshirtStore = defineStore('tshirt-store', () => {
   const page = ref<string>('depan')
   const tab = ref<string>('text')
   const text = reactive( useTextStore() )
+  const product = reactive(useProductStore())
 
   const canvases = shallowReactive<CanvasesRecord>({
     depan: null,
@@ -28,6 +31,11 @@ export const useTshirtStore = defineStore('tshirt-store', () => {
       const c = new Tshirt(id, {})
       canvasEvent(c)
       saveCanvas(id, c)
+
+      if(page.value === c.getElement().id) {
+        console.log('init')
+        product.init()
+      }
     })
   }
 
@@ -45,6 +53,28 @@ export const useTshirtStore = defineStore('tshirt-store', () => {
 
     saveCanvas(page.value, canvas.value)
     page.value = _page
+  }
+
+  function changeColor (_color: string){
+    
+    Object.keys(canvases).forEach(key => {
+      _change(canvases[key], _color)
+    })
+    _change(canvas.value, _color)
+
+    function _change(_canvas: Tshirt|null, __color: string) {
+      if(_canvas) {
+        _canvas?.forEachObject((obj: FabricObject) => {
+          console.log('obj', obj)
+          if(obj.fromSVG ===  true){
+            obj.set({
+              fill: _color
+            })
+          }
+        })
+        _canvas?.renderAll()
+      }
+    }
   }
 
   const canvasEvent = (_canvas: Tshirt) => {
@@ -84,5 +114,5 @@ export const useTshirtStore = defineStore('tshirt-store', () => {
     }
   })
 
-  return {page, tab, canvas, canvases, init, flip}
+  return {page, tab, canvas, canvases, init, flip, changeColor}
 })

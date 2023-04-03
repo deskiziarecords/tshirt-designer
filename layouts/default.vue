@@ -2,6 +2,7 @@
 import Text from '../components/tools/Text.vue'
 import Flip from '../components/tools/Flip.vue'
 import Image from '../components/tools/Image.vue'
+import Product from '../components/tools/Product.vue'
 import { useTshirtStore } from '~~/stores/tshirt';
 
 const store = useTshirtStore()
@@ -86,9 +87,7 @@ const setInputType = (type: string) => {
         <div class="p-4">
           <Text v-if="store.tab === 'text'" />
           <Image v-if="store.tab === 'image'" />
-          <div v-if="store.tab === 'product'">
-            product
-          </div>
+          <Product v-if="store.tab === 'product'" />
         </div>
         
       </div>

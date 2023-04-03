@@ -13,6 +13,7 @@ export const useTextStore = defineStore('text-store', () => {
     fontStyle: 'normal',
     fontWeight: 'normal',
     underline: false,
+    fill: '#333333'
   })
 
   const add = (_text: string, _options: Object = {}) => {
