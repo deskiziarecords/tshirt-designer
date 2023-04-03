@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTextStore } from '~~/store/text'
+import { useTextStore } from '~~/stores/text'
 import debounce from 'lodash/debounce'
 
 const text = useTextStore()

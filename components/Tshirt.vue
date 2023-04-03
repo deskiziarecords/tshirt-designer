@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 
-import { useTextStore } from "~~/store/text";
-import { useTshirtStore } from "~~/store/tshirt";
+import { useTshirtStore } from "~~/stores/tshirt";
 
 const props = defineProps({
   page: {

@@ -2,7 +2,7 @@
 import Text from '../components/tools/Text.vue'
 import Flip from '../components/tools/Flip.vue'
 import Image from '../components/tools/Image.vue'
-import { useTshirtStore } from '~~/store/tshirt';
+import { useTshirtStore } from '~~/stores/tshirt';
 
 const store = useTshirtStore()
 

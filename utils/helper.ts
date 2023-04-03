@@ -1,7 +1,7 @@
 import { File } from "buffer";
 
-const uploadImage = (event: Event)=>{
-  return new Promise((resolve)=>{
+const uploadImage = (event: Event): Promise<string> => {
+  return new Promise<string>((resolve)=>{
     const input = event.target as HTMLInputElement;
 
     if (!input.files?.length) {
@@ -13,7 +13,7 @@ const uploadImage = (event: Event)=>{
   
     reader.onload = (event: Event) => {
       const src = reader.result;
-      return resolve(src)
+      return resolve(<string>src)
     };
     reader.readAsDataURL(selectedFile)
   })

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useTshirtStore } from '~~/store/tshirt'
+import { useTshirtStore } from '~~/stores/tshirt'
 
 const store = useTshirtStore()
 
