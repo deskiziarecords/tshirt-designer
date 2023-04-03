@@ -7,7 +7,7 @@ import { useTshirtStore } from '~~/stores/tshirt';
 const store = useTshirtStore()
 
 const setInputType = (type: string) => {
-  store.inputType = type
+  store.tab = type
 }
 
 </script>
@@ -70,15 +70,25 @@ const setInputType = (type: string) => {
       <!-- <label for="my-drawer" class="drawer-overlay"></label> -->
 
       <div class="w-80 bg-base-100 text-base-content py-4">
-        <div class="tabs">
-          <a @click="setInputType('text')" class="tab tab-bordered" :class="{'tab-active': store.inputType === 'text'}">Text</a> 
-          <a @click="setInputType('image')" class="tab tab-bordered" :class="{'tab-active': store.inputType === 'image'}">Image</a> 
+        <div class="tab justify-center w-full mb-3">
+          <a @click="setInputType('text')" class="tab tab-bordered flex-1 text-2xl" :class="{'tab-active': store.tab === 'text'}">
+            <icon name="iconoir:text-alt" />
+          </a> 
+          <a @click="setInputType('image')" class="tab tab-bordered flex-1 text-2xl" :class="{'tab-active': store.tab === 'image'}">
+            <icon name="ion:md-images" />
+          </a> 
+          <a @click="setInputType('product')" class="tab tab-bordered flex-1 text-2xl" :class="{'tab-active': store.tab === 'product'}">
+            <icon name="ion:shirt" />
+          </a> 
         </div>
         <!-- Sidebar content here -->
 
         <div class="p-4">
-          <Text v-if="store.inputType === 'text'" />
-          <Image v-if="store.inputType === 'image'" />
+          <Text v-if="store.tab === 'text'" />
+          <Image v-if="store.tab === 'image'" />
+          <div v-if="store.tab === 'product'">
+            product
+          </div>
         </div>
         
       </div>

@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia'
 import { Tshirt } from '~~/composables/Tshirt'
 import { useTextStore } from './text'
-import { Textbox } from 'fabric'
 
 export const useTshirtStore = defineStore('tshirt-store', () => {
   interface CanvasesRecord {
@@ -9,7 +8,7 @@ export const useTshirtStore = defineStore('tshirt-store', () => {
   }
 
   const page = ref<string>('depan')
-  const inputType = ref<string>('text')
+  const tab = ref<string>('text')
   const text = reactive( useTextStore() )
 
   const canvases = shallowReactive<CanvasesRecord>({
@@ -70,11 +69,11 @@ export const useTshirtStore = defineStore('tshirt-store', () => {
         text.options[key] = obj[key]
       })
       text.object = obj
-      inputType.value = 'text'
+      tab.value = 'text'
     }
     else if( obj.isType('image')) {
       text.text = ''
-      inputType.value = 'image'
+      tab.value = 'image'
     }
 
   }
@@ -85,5 +84,5 @@ export const useTshirtStore = defineStore('tshirt-store', () => {
     }
   })
 
-  return {page, inputType, canvas, canvases, init, flip}
+  return {page, tab, canvas, canvases, init, flip}
 })

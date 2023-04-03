@@ -34,16 +34,15 @@ const setFont = (key: String) => {
 
 <template>
   <div class="form-control mb-3">
-    <label class="label">
-      <span class="label-text">Input Text</span>
-    </label>
-    <textarea :value="text.text" @input="addText($event)" class="textarea textarea-primary textarea-bordered h-24" placeholder="input text"></textarea>
+    <div class="btn-group mb-2">
+      <button class="btn btn-sm btn-outline border-r-0 text-lg" :class="{'btn-active': isBold}" @click="setFont('bold')"><Icon name="ic:baseline-format-bold" /></button>
+      <button class="btn btn-sm btn-outline border-r-0 text-lg" :class="{'btn-active': isItalic}" @click="setFont('italic')"><icon name="ic:baseline-format-italic"/></button>
+      <button class="btn btn-sm btn-outline border-r-0 text-lg" :class="{'btn-active': isUnderline}" @click="setFont('underline')"><icon name="ic:baseline-format-underlined"/></button>
+      <button class="btn btn-sm btn-outline text-lg" :class="{'btn-active': isUnderline}" @click="setFont('underline')"><icon name="ion:color-fill"/></button>
+    </div>
+    <textarea :value="text.text" @input="addText($event)" class="textarea textarea-bordered h-24" placeholder="input text"></textarea>
   </div>
   <div class="form-control">
-    <div class="btn-group">
-      <button class="btn btn-sm btn-outline border-r-0 text-xl" :class="{'btn-active': isBold}" @click="setFont('bold')"><Icon name="ic:baseline-format-bold" /></button>
-      <button class="btn btn-sm btn-outline border-r-0 text-xl" :class="{'btn-active': isItalic}" @click="setFont('italic')"><icon name="ic:baseline-format-italic"/></button>
-      <button class="btn btn-sm btn-outline text-xl" :class="{'btn-active': isUnderline}" @click="setFont('underline')"><icon name="ic:baseline-format-underlined"/></button>
-    </div>
+    
   </div>
 </template>
