@@ -13,9 +13,9 @@ const setInputType = (type: string) => {
 
 </script>
 <template>
-  <div class="navbar bg-base-100 border">
+  <div class="navbar bg-base-100 border border-l-0">
     <div class="flex-1">
-      <a class="btn btn-ghost normal-case text-xl">Oblong</a>
+      <span>OBLONG</span>
     </div>
     <div class="flex-none">
       <div class="dropdown dropdown-end">
@@ -67,30 +67,41 @@ const setInputType = (type: string) => {
       <flip></flip>
 
     </div> 
-    <div class="drawer-side border-r">
+    <div class="drawer-side">
       <!-- <label for="my-drawer" class="drawer-overlay"></label> -->
-
-      <div class="w-80 bg-base-100 text-base-content py-4">
-        <div class="tab justify-center w-full mb-3">
-          <a @click="setInputType('text')" class="tab tab-bordered flex-1 text-2xl" :class="{'tab-active': store.tab === 'text'}">
-            <icon name="iconoir:text-alt" />
-          </a> 
-          <a @click="setInputType('image')" class="tab tab-bordered flex-1 text-2xl" :class="{'tab-active': store.tab === 'image'}">
-            <icon name="ion:md-images" />
-          </a> 
-          <a @click="setInputType('product')" class="tab tab-bordered flex-1 text-2xl" :class="{'tab-active': store.tab === 'product'}">
-            <icon name="ion:shirt" />
-          </a> 
+      <div class="flex">
+        <div class="w-24 border-r shadow-xl relative">
+          <ul class="menu bg-base-100">
+            <li>
+              <a @click="setInputType('text')" class="justify-center text-2xl" :class="{'active': store.tab === 'text'}">
+                <icon name="iconoir:text-alt" />
+              </a> 
+            </li>
+            <li>
+              <a @click="setInputType('image')" class="justify-center text-2xl" :class="{'active': store.tab === 'image'}">
+                <icon name="ion:md-images" />
+              </a> 
+            </li>
+            <li>
+              <a @click="setInputType('product')" class="justify-center text-2xl" :class="{'active': store.tab === 'product'}">
+                <icon name="ion:shirt" />
+              </a>
+            </li>
+          </ul>
         </div>
-        <!-- Sidebar content here -->
-
-        <div class="p-4">
-          <Text v-if="store.tab === 'text'" />
-          <Image v-if="store.tab === 'image'" />
-          <Product v-if="store.tab === 'product'" />
+        <div class="w-80 bg-base-100 text-base-content py-4 bg-slate-100">
+          <!-- Sidebar content here -->
+  
+          <div class="p-4">
+            <Text v-if="store.tab === 'text'" />
+            <Image v-if="store.tab === 'image'" />
+            <Product v-if="store.tab === 'product'" />
+          </div>
+          
         </div>
-        
       </div>
+
+
     </div>
   </div>
 </template>
