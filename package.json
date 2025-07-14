@@ -24,8 +24,5 @@
     "daisyui": "^2.51.5",
     "fabric": "^6.0.0-beta1",
     "pinia": "^2.0.33"
-  },
-  "overrides": {
-    "vue": "latest"
   }
 }
